@@ -1,6 +1,6 @@
 import pygame
 import os
-
+FONT_STYLE = "freesansbold.ttf"
 # Global Constants
 TITLE = "Chrome Dino Runner"
 SCREEN_HEIGHT = 600
@@ -10,6 +10,8 @@ IMG_DIR = os.path.join(os.path.dirname(__file__), "..", "assets")
 
 # Assets Constants
 ICON = pygame.image.load(os.path.join(IMG_DIR, "DinoWallpaper.png"))
+DINO_START = pygame.image.load(os.path.join(IMG_DIR, "DINO/DinoStart.png"))
+DINO_DEAD = pygame.image.load(os.path.join(IMG_DIR, "DINO/DinoDead.png"))
 
 RUNNING = [
     pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoRun1.png")),
