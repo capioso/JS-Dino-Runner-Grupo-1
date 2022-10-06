@@ -108,7 +108,7 @@ class Game:
         pygame.display.update()
         self.playing = False
         self.death_count += 1
-        #self.score = Score()
-        #self.clock = pygame.time.Clock()
-        #self.player = Dinosaur()
-        #self.obstacle_manager = ObstacleManager()
+        self.score = Score()
+        self.clock = pygame.time.Clock()
+        self.player = Dinosaur()
+        self.obstacle_manager = ObstacleManager()
