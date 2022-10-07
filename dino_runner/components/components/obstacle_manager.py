@@ -1,8 +1,8 @@
 from .cactus import Cactus
 from .birds import Birds
 from dino_runner.utils.constants import SMALL_CACTUS, LARGE_CACTUS, BIRD
-from dino_runner.components.score import Score
 import random
+
 
 
 class ObstacleManager():
@@ -24,7 +24,6 @@ class ObstacleManager():
             if player.dino_rect.colliderect(obstacle.rect):
                 
                 if on_death():
-                    
                     self.obstacles.remove(obstacle)
                 else:
                     break

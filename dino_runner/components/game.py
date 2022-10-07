@@ -1,3 +1,4 @@
+from random import randint
 import pygame
 from dino_runner.components.components.obstacle_manager import ObstacleManager
 from dino_runner.components.components.player_hearts.player_heart_manager import PlayerHeartManager
@@ -5,7 +6,7 @@ from dino_runner.components.components.powerups.shield import Shield
 from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.score import Score
 from dino_runner.components.components.powerups.power_up_manager import PowerUpManager
-from dino_runner.utils.constants import BG, DEFAULT_TYPE, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, SHIELD_TYPE, TITLE, FPS, FONT_STYLE, DINO_START, DINO_DEAD
+from dino_runner.utils.constants import BG, CLOUD, DEFAULT_TYPE, HAMMER_TYPE, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, SHIELD_TYPE, TITLE, FPS, FONT_STYLE, DINO_START, DINO_DEAD
 
 
 class Game:
@@ -56,6 +57,7 @@ class Game:
         self.obstacle_manager.update(self.game_speed, self.player, self.on_death)
         self.score.update(self)
         self.power_ups_manager.update(self.game_speed, self.player, self.score.score)
+        self.heart_manager.update(self.score.score)
         
     def draw(self):
         self.clock.tick(FPS)
@@ -74,9 +76,12 @@ class Game:
         image_width = BG.get_width()
         self.screen.blit(BG, (self.x_pos_bg, self.y_pos_bg))
         self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
+        self.screen.blit(CLOUD,((image_width + self.x_pos_bg)  // 2, self.y_pos_bg // 2))
+        
         if self.x_pos_bg <= -image_width:
             self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
             self.x_pos_bg = 0
+
         self.x_pos_bg -= self.game_speed
 
     def Text_on_screen(self, text, pos):
@@ -94,8 +99,6 @@ class Game:
             self.Text_on_screen("Press any key to start",(SCREEN_HEIGHT - 40, SCREEN_WIDTH // 3))
             self.screen.blit(DINO_START, (SCREEN_HEIGHT - 70, SCREEN_WIDTH // 6))
             self.Text_on_screen("Just have fun :3",(SCREEN_HEIGHT - 40, SCREEN_WIDTH // 2))
-            self.last_score = self.score
-            
         else:
             self.last_score.draw(self.screen,80)
             self.Text_on_screen("I am dead :'3", (SCREEN_HEIGHT - 40, SCREEN_WIDTH // 3))
@@ -115,8 +118,12 @@ class Game:
                 self.run()
 
     def on_death(self):
-        is_invencible = self.player.type == SHIELD_TYPE or self.heart_manager.heart_count > 0
-        self.heart_manager.reduce_heart()
+        if self.heart_manager.heart_count > 0:
+            if not (self.player.type == SHIELD_TYPE or self.player.type == HAMMER_TYPE):
+                self.heart_manager.reduce_heart()
+            is_invencible = True
+        else:
+            is_invencible = (self.player.type == SHIELD_TYPE or self.player.type == HAMMER_TYPE)
         
         if not is_invencible:
             pygame.time.delay(500)

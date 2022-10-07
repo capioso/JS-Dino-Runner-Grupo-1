@@ -1,12 +1,21 @@
 from dino_runner.components.components.player_hearts.heart import Heart
 from dino_runner.utils.constants import HEART_COUNT
 
+
+
 class PlayerHeartManager:
     def __init__(self):
         self.heart_count = HEART_COUNT
 
     def reduce_heart(self):
         self.heart_count -= 1
+    
+    def gain_heart(self, score):
+        if score % 300 == 0:
+            self.heart_count += 1
+
+    def update(self,score):
+        self.gain_heart(score)
 
     def draw(self, screen):
         y_position = 20
