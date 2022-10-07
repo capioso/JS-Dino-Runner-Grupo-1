@@ -8,7 +8,7 @@ from dino_runner.components.components.powerups.hammer import Hammer
 class PowerUpManager:
     def __init__(self):
         self.power_ups = []
-        self.when_appears = 0
+        self.when_appears = randint(100,200)
 
     def generate_power_up(self,score):
         if len(self.power_ups) == 0 and self.when_appears == score:
@@ -33,4 +33,4 @@ class PowerUpManager:
 
     def reset_power_ups(self):
         self.power_ups = []
-        self.when_appears = randint(100, 200)
+        self.when_appears = randint(100,200)

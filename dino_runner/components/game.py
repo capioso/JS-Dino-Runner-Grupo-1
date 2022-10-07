@@ -64,9 +64,9 @@ class Game:
         self.screen.fill((161,130,98))
         self.draw_background()
         self.player.draw(self.screen)
+        self.power_ups_manager.draw(self.screen)
         self.obstacle_manager.draw(self.screen)
         self.score.draw(self.screen, 50)
-        self.power_ups_manager.draw(self.screen)
         self.heart_manager.draw(self.screen)
         self.draw_power_up_active()
         pygame.display.update()
@@ -118,6 +118,8 @@ class Game:
                 self.run()
 
     def on_death(self):
+        #is_invencible = self.heart_manager.heart_count > 0 or self.player.type == SHIELD_TYPE 
+        
         if self.heart_manager.heart_count > 0:
             if not (self.player.type == SHIELD_TYPE or self.player.type == HAMMER_TYPE):
                 self.heart_manager.reduce_heart()
